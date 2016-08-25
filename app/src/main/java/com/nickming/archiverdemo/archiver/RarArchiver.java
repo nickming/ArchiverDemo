@@ -11,9 +11,7 @@ import de.innosystec.unrar.rarfile.FileHeader;
 /**
  * Created by Administrator on 2016/8/25.
  */
-public class RarArchiver extends BaseArchiver{
-
-
+public class RarArchiver extends BaseArchiver {
 
     @Override
     public void doArchiver(File[] files, String destpath) {
@@ -21,7 +19,7 @@ public class RarArchiver extends BaseArchiver{
     }
 
     @Override
-    public void doUnArchiver(String srcPath, String unrarPath) {
+    public void doUnArchiver(String srcPath, String unrarPath, final IArchiverListener listener) {
         File srcFile = new File(srcPath);
         if (null == unrarPath || "".equals(unrarPath)) {
             unrarPath = srcFile.getParentFile().getPath();
@@ -33,13 +31,23 @@ public class RarArchiver extends BaseArchiver{
         }
         Log.d(TAG, "unrar file to :" + unrarPath);
 
+        if (listener != null)
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    listener.onStartArchiver();
+                }
+            });
+
         FileOutputStream fileOut = null;
         Archive rarfile = null;
 
         try {
             rarfile = new Archive(srcFile);
-            FileHeader fh = rarfile.nextFileHeader();
-            while (fh != null) {
+            FileHeader fh = null;
+            final int total = rarfile.getFileHeaders().size();
+            for (int i = 0; i < rarfile.getFileHeaders().size(); i++) {
+                fh = rarfile.getFileHeaders().get(i);
                 String entrypath = "";
                 if (fh.isUnicode()) {//解決中文乱码
                     entrypath = fh.getFileNameW().trim();
@@ -62,9 +70,18 @@ public class RarArchiver extends BaseArchiver{
                     rarfile.extractFile(fh, fileOut);
                     fileOut.close();
                 }
-                fh = rarfile.nextFileHeader();
+                if (listener != null) {
+                    final int finalI = i;
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            listener.onProgressArchiver(finalI + 1, total);
+                        }
+                    });
+                }
             }
             rarfile.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -85,6 +102,14 @@ public class RarArchiver extends BaseArchiver{
                     e.printStackTrace();
                 }
             }
+
+            if (listener != null)
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onEndArchiver();
+                    }
+                });
         }
     }
 }

@@ -1,5 +1,8 @@
 package com.nickming.archiverdemo.archiver;
 
+import android.os.Handler;
+import android.os.Message;
+
 import java.io.File;
 
 /**
@@ -8,6 +11,14 @@ import java.io.File;
 public abstract class BaseArchiver {
 
     protected String TAG=this.getClass().getSimpleName();
+
+
+    protected Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     /**
      * 压缩文件
@@ -21,5 +32,5 @@ public abstract class BaseArchiver {
      * @param srcfile
      * @param unrarPath
      */
-    public abstract void doUnArchiver(String srcfile, String unrarPath);
+    public abstract void doUnArchiver(String srcfile, String unrarPath,IArchiverListener listener);
 }
