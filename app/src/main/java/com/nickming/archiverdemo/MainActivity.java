@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mButton;
 
-    private String source= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"test.rar";
+    private String source= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"sb.zip";
 
     private String destpath=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"test"+File.separator;
 
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ArchiverManager.getInstance().doUnArchiver(source, destpath, new IArchiverListener() {
+                ArchiverManager.getInstance().doUnArchiver(source, destpath,"", new IArchiverListener() {
                     @Override
                     public void onStartArchiver() {
                         dialog.show();

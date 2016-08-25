@@ -32,5 +32,5 @@ public abstract class BaseArchiver {
      * @param srcfile
      * @param unrarPath
      */
-    public abstract void doUnArchiver(String srcfile, String unrarPath,IArchiverListener listener);
+    public abstract void doUnArchiver(String srcfile, String unrarPath,String password,IArchiverListener listener);
 }

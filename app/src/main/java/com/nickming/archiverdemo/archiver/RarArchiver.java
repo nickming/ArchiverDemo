@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import de.innosystec.unrar.Archive;
 import de.innosystec.unrar.rarfile.FileHeader;
 
+
 /**
  * Created by Administrator on 2016/8/25.
  */
@@ -19,7 +20,7 @@ public class RarArchiver extends BaseArchiver {
     }
 
     @Override
-    public void doUnArchiver(String srcPath, String unrarPath, final IArchiverListener listener) {
+    public void doUnArchiver(String srcPath, String unrarPath,String password, final IArchiverListener listener) {
         File srcFile = new File(srcPath);
         if (null == unrarPath || "".equals(unrarPath)) {
             unrarPath = srcFile.getParentFile().getPath();
@@ -43,7 +44,7 @@ public class RarArchiver extends BaseArchiver {
         Archive rarfile = null;
 
         try {
-            rarfile = new Archive(srcFile);
+            rarfile = new Archive(srcFile,password,false);
             FileHeader fh = null;
             final int total = rarfile.getFileHeaders().size();
             for (int i = 0; i < rarfile.getFileHeaders().size(); i++) {
