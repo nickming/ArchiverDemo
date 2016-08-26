@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     private Button mButton;
 
-    private String source= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"sb.zip";
+    private String source= Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"testRar.rar";
 
-    private String destpath=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"test"+File.separator;
+    private String destpath=Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"testRar"+File.separator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

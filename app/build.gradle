@@ -24,6 +24,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile files('libs/zip4j_1.3.2.jar')
+    compile files('libs/andun7z.jar')
     compile files('libs/java-unrar-decryption-supported-20120613.jar')
-    compile files('lib/sevenzipjbinding.jar')
 }

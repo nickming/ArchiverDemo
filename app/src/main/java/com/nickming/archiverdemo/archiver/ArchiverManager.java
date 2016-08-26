@@ -36,6 +36,7 @@ public class ArchiverManager extends BaseArchiver{
 
     protected ArchiverManager() {
         mThreadPool= Executors.newSingleThreadExecutor();
+
     }
 
     @Override
@@ -75,7 +76,7 @@ public class ArchiverManager extends BaseArchiver{
         switch (type)
         {
             case ArchiverType._7Z:
-                return new Z7Archiver();
+                return new SevenZipArchiver();
             case ArchiverType._ZIP:
                 return new ZipArchiver();
             case ArchiverType._RAR:
